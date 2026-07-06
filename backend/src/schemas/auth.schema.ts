@@ -21,3 +21,23 @@ export const registerSchema = {
         additionalProperties: false,
     },
 };
+
+export const LoginSchema = {
+    body: {
+        type: "object",
+        required: ["email", "password"],
+        properties: {
+            email: {
+                type: "string",
+                format: "email",
+            },
+            password: {
+                type: "string",
+                minLength: 6,
+                maxLength: 12,
+            },
+        
+        },
+        additionalProperties: false,
+    }
+}
