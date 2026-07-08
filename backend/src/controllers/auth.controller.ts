@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { AuthService } from "../services/auth.service";
-import { RegisterRequest } from "../types/auth";
+import { RegisterRequest, LoginRequest } from "../types/auth";
 
 export class AuthController {
     constructor(private readonly authService: AuthService){}
@@ -15,4 +15,16 @@ export class AuthController {
             return reply.status(400).send({message: (error as Error).message});
         }
     }
+
+    // login
+    async login(request: FastifyRequest<{Body: LoginRequest}>, reply: FastifyReply){
+        try{
+            const response = await this.authService.login(request.body);
+            return reply.status(200).send(response);
+        }
+        catch(error){
+            return reply.status(400).send({message: (error as Error).message});
+        }
+    }
+
 }
