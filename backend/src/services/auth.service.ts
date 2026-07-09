@@ -1,8 +1,8 @@
 import { randomUUID } from "crypto";
 import { User } from "../models/user";
 import { UserRepository } from "../repositories/user.repository";
-import { RegisterRequest } from "../types/auth";
-import { hashPassword } from "../utils/bcrypt";
+import { RegisterRequest, LoginRequest, LoginResponse } from "../types/auth";
+import { hashPassword, verifyPassword } from "../utils/bcrypt";
 
 export class AuthService {
     constructor(private readonly userRepository: UserRepository){}
@@ -24,5 +24,20 @@ export class AuthService {
         };
 
         return this.userRepository.create(newUser);
+    };
+
+    // login user
+    async login(request: LoginRequest) : Promise<LoginResponse> {
+        const user = await this.userRepository.findByEmail(request.email);
+
+        if(!user) throw new Error("Invalid email or password");
+
+        // verify password
+        const isPasswordValid = await verifyPassword(request.password, user.passwordHash);
+        if(!isPasswordValid) throw new Error("Invalid email or password");
+        
+        return {
+            message: "Login successful", 
+        }
     }
 }
