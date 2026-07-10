@@ -5,5 +5,8 @@ export const config = {
 
     security: {
         bcryptSaltRounds: Number(process.env.BCRYPT_SALT_ROUNDS) || 12,
+        jwtSecret: process.env.JWT_SECRET,
+        jwtAccessTokenExpiry: process.env.JWT_ACCESS_TOKEN_EXPIRY,
+        jwtRefreshTokenExpiry: process.env.JWT_REFRESH_TOKEN_EXPIRY,
     }
 }
