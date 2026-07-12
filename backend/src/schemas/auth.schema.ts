@@ -1,4 +1,4 @@
-export const registerSchema = {
+export const RegisterSchema = {
     body: {
         type: "object",
         required: ["name", "email", "password"],
