@@ -1,9 +1,14 @@
+/**
+ * sign() as Payload → Token
+ * verify() as Token → Payload (after confirming it's authentic and not expired)
+ */
+
 import { FastifyInstance } from "fastify";
 import { config } from "../config/env";
 import { AccessTokenPayload, RefreshTokenPayload, TokenPair } from "../types/jwt";
-import { REPLCommand } from "repl";
 
-export class JWTServoce {
+
+export class JWTService {
     constructor(private readonly app: FastifyInstance) {}
 
     /**
@@ -49,4 +54,4 @@ export class JWTServoce {
             }
         )
     };
-}
+};
