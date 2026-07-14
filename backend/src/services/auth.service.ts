@@ -3,9 +3,10 @@ import { User } from "../models/user";
 import { UserRepository } from "../repositories/user.repository";
 import { RegisterRequest, LoginRequest, LoginResponse } from "../types/auth";
 import { hashPassword, verifyPassword } from "../utils/bcrypt";
+import { JWTService } from "./jwt.service";
 
 export class AuthService {
-    constructor(private readonly userRepository: UserRepository){}
+    constructor(private readonly userRepository: UserRepository, private readonly jwtService: JWTService){}
 
     // register user
     async register(data: RegisterRequest): Promise<User>{
@@ -36,8 +37,11 @@ export class AuthService {
         const isPasswordValid = await verifyPassword(request.password, user.passwordHash);
         if(!isPasswordValid) throw new Error("Invalid email or password");
         
-        return {
-            message: "Login successful", 
-        }
+        return await this.jwtService.issueTokens({
+            userId: user.id,
+            email: user.email,
+        }, {
+            userId: user.id,
+        });
     }
 }
