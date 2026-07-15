@@ -1,14 +1,18 @@
 import { FastifyInstance } from "fastify";
 
-import { authController } from "../composition/auth";
-import { RegisterRequest } from "../types/auth";
+import { RegisterRequest, LoginRequest } from "../types/auth";
+import { RegisterSchema, LoginSchema } from "../schemas/auth.schema";
+import { AuthController } from "../controllers/auth.controller";
 
-import { registerSchema } from "../schemas/auth.schema";
 
-export async function authRoutes(app: FastifyInstance){
+export async function authRoutes(app: FastifyInstance, { authController }: { authController: AuthController} ){
     
-        // POST
-        app.post<{Body: RegisterRequest}>("/register", { schema: registerSchema }, async (request, reply) => {
+        // Register
+        app.post<{Body: RegisterRequest}>("/register", { schema: RegisterSchema }, async (request, reply) => {
             return authController.register(request, reply);
-        })
+        });
+
+        app.post<{Body: LoginRequest}>("/login", {schema: LoginSchema}, async (request, reply) => {
+            return authController.login(request, reply);
+        });
 };
