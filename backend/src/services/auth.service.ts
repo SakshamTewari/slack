@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { User } from "../models/user";
+import { User } from "../models/user.model";
 import { UserRepository } from "../repositories/user.repository";
 import { RegisterRequest, LoginRequest, LoginResponse, RegisterResponse } from "../types/auth";
 import { hashPassword, verifyPassword } from "../utils/bcrypt";
