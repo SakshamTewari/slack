@@ -10,15 +10,7 @@ export class WorkspaceRepository {
     };
 
     // Create a new workspace
-    async createWorkspace(name: string): Promise<Workspace>{
-
-        const workspace: Workspace = {
-            id: randomUUID(),
-            name,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        };
-
+    async createWorkspace(workspace: Workspace): Promise<Workspace>{
         this.workspaces.set(workspace.id, workspace);
         return workspace;
     };
@@ -34,13 +26,9 @@ export class WorkspaceRepository {
     };
 
     // Update workspace
-    async updateWorkspace(id: string, name: string): Promise<Workspace | null> {
-        const workspace = this.workspaces.get(id);
-        if (!workspace) return null;
-
-        workspace.name = name;
-        workspace.updatedAt = new Date();
-        this.workspaces.set(id, workspace);
+    async updateWorkspace(workspace: Workspace): Promise<Workspace> {
+        
+        this.workspaces.set(workspace.id, workspace);
         return workspace;
     };
 
