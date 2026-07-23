@@ -30,13 +30,18 @@ export class WorkspaceService {
         return this.workspaceRepository.updateWorkspace(workspace);
     };
 
-    // Get all
+    // Get all Workspaces
     async getAllWorkspaces(): Promise<Workspace[]>{
         return this.workspaceRepository.findAllWorkspaces();
     }
 
-    // Get by id
+    // Get Workspace by id
     async getWorkspaceById(id: string): Promise<Workspace | null>{
         return this.workspaceRepository.findWorkspaceById(id);
+    }
+
+    // Delete Workspace
+    async deleteWorkspace(id: string): Promise<boolean>{
+        return this.workspaceRepository.deleteWorkspace(id);
     }
 }
